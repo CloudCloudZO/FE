@@ -8,6 +8,7 @@ const formattedBaseURL = rawBaseURL?.startsWith("http")
   : `https://${rawBaseURL}`;  // 기본적으로 https 붙이기
 
 console.log("Formatted Axios baseURL:", formattedBaseURL);
+console.log("🔍 환경 변수 REACT_APP_BASE_URL:", process.env.REACT_APP_BASE_URL);
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({

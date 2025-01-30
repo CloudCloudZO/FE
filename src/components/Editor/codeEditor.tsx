@@ -16,8 +16,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
     const { time } = useTimer({
         initialTime: 20 * 60, // 20분
         onFiveMinutesLeft: () => {
-            setIsModalOpen(true); // 모달 열기
-            setTimeout(() => setIsModalOpen(false), 3000); // 3초 후 모달 닫기
+            setIsModalOpen(true);
+            setTimeout(() => setIsModalOpen(false), 3000);
         },
         onTimeEnd: () => {
             setIsEditorDisabled(true); // 에디터 비활성화
@@ -31,9 +31,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
             .toString()
             .padStart(2, "0")}`;
     };
-
     const handleEditorDidMount: OnMount = (editor, monaco) => {
-        editorRef.current = editor; // Monaco Editor 인스턴스 저장
+        editorRef.current = editor;
         monaco.editor.defineTheme("custom-dark", {
             base: "vs-dark",
             inherit: true,
@@ -44,11 +43,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onMount }) => {
             },
         });
         monaco.editor.setTheme("custom-dark");
+
+        onMount(editor, formatTime(time));
     };
 
     useEffect(() => {
         if (editorRef.current) {
-            onMount(editorRef.current, formatTime(time)); // 시간이 업데이트될 때마다 상위 컴포넌트로 전달
+            onMount(editorRef.current, formatTime(time)); // 상위 컴포넌트로 업데이트 전달
         }
     }, [time, onMount]);
 
