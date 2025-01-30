@@ -1,10 +1,18 @@
 import axios from "axios";
 
+// 혹시 URL 앞에 https 안 붙은 문제인가...? 싶어서 시도
+const rawBaseURL = process.env.REACT_APP_BASE_URL;
+
+const formattedBaseURL = rawBaseURL?.startsWith("http")
+  ? rawBaseURL
+  : `https://${rawBaseURL}`;  // 기본적으로 https 붙이기
+
+console.log("Formatted Axios baseURL:", formattedBaseURL);
 console.log("🔍 환경 변수 REACT_APP_BASE_URL:", process.env.REACT_APP_BASE_URL);
 
 // Axios 인스턴스 생성
 const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL, // 환경변수에서 API 기본 URL 설정
+    baseURL: formattedBaseURL, // 환경변수에서 API 기본 URL 설정
     headers: {
         "Content-Type": "application/json",
     },
